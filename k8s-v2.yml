@@ -1,0 +1,32 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: voiceout-deployment
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: voiceout-service-app-label
+#   template:
+#     metadata:
+#       labels:
+#         app: voiceout-service-app-label
+#     spec:
+#       containers:
+#           image:  voiceoutregtest.azurecr.io/voiceout-app/web:latest
+#           ports:
+#             - containerPort: 3000
+#               protocol: TCP
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: voiceout-service-name
+# spec:
+#   selector:
+#     app: voiceout-service-app-label
+#   ports:
+#     - name: http
+#       port: 80
+#       targetPort: 3000
+#   type: LoadBalancer

@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voiceout-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voiceout
+  template:
+    metadata:
+      labels:
+        app: voiceout
+    spec:
+      containers:
+      - env:
+        name: voiceout
+        image: voiceoutregtest.azurecr.io/voiceout-app/web:latest
+        ports:
+          - containerPort: 3000
+            protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: voiceout-service
+spec:
+  selector:
+    app: voiceout
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
